@@ -64,44 +64,43 @@ const images = [
   },
 ];
 
-function createGallery(images) {
+// Функція для створення елементів галереї
+function createGalleryItems() {
   const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = images
-    .map(
-      ({ preview, original, description }) => `
-    <li class="gallery-item">
-      <a class="gallery-link" href="${original}">
-        <img
-          class="gallery-image"
-          src="${preview}"
-          data-source="${original}"
-          alt="${description}"
-        />
-      </a>
-    </li>
-  `
-    )
-    .join("");
+  const items = images.map((image) => {
+    return `
+      <li class="gallery-item">
+        <a class="gallery-link" href="${image.original}">
+          <img
+            class="gallery-image"
+            src="${image.preview}"
+            data-source="${image.original}"
+            alt="${image.description}"
+          />
+        </a>
+      </li>
+    `;
+  });
+
+  // Додаємо усі елементи галереї до DOM
+  gallery.innerHTML = items.join("");
 }
 
-createGallery(images);
+// Функція для створення елементів галереї
+createGalleryItems();
 
-document.querySelector(".gallery").addEventListener("click", (event) => {
+// Обробник подій для відкриття модального вікна при кліку на зображення
+const gallery = document.querySelector(".gallery");
+gallery.addEventListener("click", (event) => {
   event.preventDefault();
-  if (event.target.nodeName !== "IMG") return;
 
-  const originalImageSrc = event.target.dataset.source;
+  if (event.target.classList.contains("gallery-image")) {
+    const largeImageUrl = event.target.dataset.source;
 
-  // Відкриття модального вікна
-  const instance = basicLightbox.create(`
-    <img src="${originalImageSrc}" alt="${event.target.alt}">
-  `);
+    const lightbox = basicLightbox.create(`
+      <img src="${largeImageUrl}" width="1112" height="640">
+    `);
 
-  instance.show(() => {
-    document.body.classList.add("modal-open");
-  });
-
-  instance.element().addEventListener("basiclightbox:close", () => {
-    document.body.classList.remove("modal-open");
-  });
+    lightbox.show();
+  }
 });
