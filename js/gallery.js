@@ -64,7 +64,6 @@ const images = [
   },
 ];
 
-// Функція для створення елементів галереї
 function createGalleryItems() {
   const gallery = document.querySelector(".gallery");
   const items = images.map((image) => {
@@ -82,14 +81,11 @@ function createGalleryItems() {
     `;
   });
 
-  // Додаємо усі елементи галереї до DOM
   gallery.innerHTML = items.join("");
 }
 
-// Функція для створення елементів галереї
 createGalleryItems();
 
-// Обробник подій для відкриття модального вікна при кліку на зображення
 const gallery = document.querySelector(".gallery");
 gallery.addEventListener("click", (event) => {
   event.preventDefault();
