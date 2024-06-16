@@ -25,6 +25,7 @@ body {
   min-height: 100vh;
 }
 
+/* === GALLERY === */
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 360px);
